@@ -5,6 +5,7 @@ const colors = require('colors');
 
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+
 /* const logger = require("./middleware/logger"); */
 
 // Load env vars
@@ -13,8 +14,8 @@ dotenv.config({ path: './config/config.env' });
 // Connect to database
 connectDB();
 
-//Route files
-const bootcamps = require('./routes/bootcamp');
+const books = require('./routes/book');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -29,7 +30,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 //Mount routers
-app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/books', books);
+app.use('/api/v1/register', auth);
 
 app.use(errorHandler);
 
