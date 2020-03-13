@@ -1,4 +1,5 @@
 const express = require('express');
+
 const {
   getBook,
   getBooks,
@@ -9,15 +10,17 @@ const {
 
 const router = express.Router();
 
+const { protect, authorize } = require('../middleware/auth');
+
 router
   .route('/')
   .get(getBooks)
-  .post(createBook);
+  .post(protect, authorize('admin'), createBook);
 
 router
   .route('/:id')
   .get(getBook)
-  .put(updateBook)
-  .delete(deleteBook);
+  .put(protect, authorize('admin'), updateBook)
+  .delete(protect, authorize('admin'), deleteBook);
 
 module.exports = router;
